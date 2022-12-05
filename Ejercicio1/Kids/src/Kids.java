@@ -1,8 +1,8 @@
 public class Kids extends Thread {
-    KingerGarden kingerGarden;
+    Kingergarden kingerGarden;
     String name;
 
-    public Kids(String name, KingerGarden kingerGarden) {
+    public Kids(String name, Kingergarden kingerGarden) {
         this.name = name;
         this.kingerGarden = kingerGarden;
     }

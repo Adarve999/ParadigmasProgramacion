@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
-public class KingerGarden {
+public class Kingergarden {
     private ArrayList<String> juguetes;
     private Semaphore exCLSemaphore = new Semaphore(1);
     private Semaphore vacio = new Semaphore(0);
@@ -10,7 +10,7 @@ public class KingerGarden {
     private Semaphore LlenoAgua;
     private Semaphore LlenoCama;
 
-    public KingerGarden(int juguetes, int comida, int agua, int cama) {
+    public Kingergarden(int juguetes, int comida, int agua, int cama) {
         this.juguetes = new ArrayList<String>(juguetes);
         this.LlenoJuguetes = new Semaphore(juguetes);
         this.LlenoComida = new Semaphore(comida);
