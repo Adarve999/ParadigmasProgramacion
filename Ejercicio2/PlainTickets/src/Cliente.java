@@ -14,37 +14,38 @@ public class Cliente {
         Socket cliente;
         DataInputStream entrada;
         DataOutputStream salida;
-        Scanner consola = new Scanner(System.in);
-        String mensaje;
-        try {
-            cliente = new Socket(InetAddress.getLocalHost(), 5000);
-            entrada = new DataInputStream(cliente.getInputStream());
-            salida = new DataOutputStream(cliente.getOutputStream());
-            boolean reservado = false;
+        try (Scanner consola = new Scanner(System.in)) {
+            String mensaje;
+            try {
+                cliente = new Socket(InetAddress.getLocalHost(), 5000);
+                entrada = new DataInputStream(cliente.getInputStream());
+                salida = new DataOutputStream(cliente.getOutputStream());
+                boolean reservado = false;
 
-            while (reservado != true) {
-                System.out.println("Introduce que asiento quieres reservar. (Fila),(Columna).");
-                mensaje = consola.nextLine();
-                salida.writeUTF(mensaje);
-                mensaje = entrada.readUTF();
-                if ("Reservado.".equals(mensaje)) {
-                    System.out.println(ANSI_RESET + Fondo_GREEN + "Su Reserva se hizo correctamente." + ANSI_RESET);
-                    reservado = true;
-                } else if ("Completo.".equals(mensaje)) {
-                    System.out.println(ANSI_RESET + Fondo_RED + "Esta completo todo, lo sentimos.");
-                    reservado = true;
-                } else if ("Ocupado.".equals(mensaje)) {
-                    System.out.println(
-                            ANSI_RESET + Fondo_RED + "Esta ocupado el sitio. Vuelva a intentarlo." + ANSI_RESET);
-                } else if ("Error.".equals(mensaje)) {
-                    System.out.println(ANSI_RESET + Fondo_RED + "No existe ese sitio en nuestro avion." + ANSI_RESET);
+                while (reservado != true) {
+                    System.out.println("Introduce que asiento quieres reservar. (Fila),(Columna).");
+                    mensaje = consola.nextLine();
+                    salida.writeUTF(mensaje);
+                    mensaje = entrada.readUTF();
+                    if ("Reservado.".equals(mensaje)) {
+                        System.out.println(ANSI_RESET + Fondo_GREEN + "Su Reserva se hizo correctamente." + ANSI_RESET);
+                        reservado = true;
+                    } else if ("Completo.".equals(mensaje)) {
+                        System.out.println(ANSI_RESET + Fondo_RED + "Esta completo todo, lo sentimos.");
+                        reservado = true;
+                    } else if ("Ocupado.".equals(mensaje)) {
+                        System.out.println(
+                                ANSI_RESET + Fondo_RED + "Esta ocupado el sitio. Vuelva a intentarlo." + ANSI_RESET);
+                    } else if ("Error.".equals(mensaje)) {
+                        System.out.println(ANSI_RESET + Fondo_RED + "No existe ese sitio en nuestro avion." + ANSI_RESET);
+                    }
                 }
+                entrada.close();
+                salida.close();
+                cliente.close();
+            } catch (IOException ex) {
+                System.out.println("Error: " + ex.getMessage());
             }
-            entrada.close();
-            salida.close();
-            cliente.close();
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
         }
     }
 }
